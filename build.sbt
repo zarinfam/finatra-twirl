@@ -4,9 +4,14 @@ version := "1.0"
 
 scalaVersion := "2.11.7"
 
-// Change this to another test framework if you prefer
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+lazy val root = (project in file("."))
+  .enablePlugins(SbtTwirl)
+  .settings(
+    sourceDirectories in (Compile, TwirlKeys.compileTemplates) += (baseDirectory.value.getParentFile / "src" / "main" / "twirl"))
 
-// Uncomment to use Akka
-//libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.11"
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  "Twitter Maven" at "https://maven.twttr.com"
+)
 
+libraryDependencies += "com.twitter" %% "finatra-http" % "2.6.0"
